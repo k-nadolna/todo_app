@@ -11,14 +11,11 @@
   <div class="bg-light m-5 p-4 border rounded w-50 mx-auto" >
         <div class="border-bottom py-2 d-flex justify-content-between">
           <h3>Change the task</h3>
-        <form action="/cancel" method="POST">
-          @csrf
-          <button class="btn btn-outline-secondary">Go back</button>
-        </form>
+          <a href="{{route('dashboard')}}" class="btn btn-outline-secondary">Cancel</a>
         </div>
         
         <div>
-          <form action="/edit-task/{{$task->id}}" method="POST">
+          <form action="{{ route('tasks.update', $task->id)}}" method="POST">
           @csrf 
           @method('PUT')
           <input class="form-control my-2 @error ('title') is-invalid @enderror" type="text" name="title"  value="{{$task->title}}">

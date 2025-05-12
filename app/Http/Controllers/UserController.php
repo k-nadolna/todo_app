@@ -41,4 +41,14 @@ class UserController extends Controller
       return redirect('/');
 
     }
+
+    public function showDashboard(){
+        $tasks = [];
+    if(auth()->check()){
+        $tasks =  auth()->user()->usersCoolTasks()->latest()->get();
+    }
+       
+        return view('home', ['tasks'=> $tasks]);
+
+    }
 }
