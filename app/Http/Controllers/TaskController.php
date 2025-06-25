@@ -7,30 +7,6 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index(Request $request)
-{       
-    $sortBy = $request->get('sort_by', 'date');
-    $direction = $request->get('direction', 'asc');
-    $statusFilter = $request->get('status');
-    $importantFilter = $request->get('important');
-
-    $query = Task::where('user_id', auth()->id());
-
-    if($statusFilter !== null){
-        $query->where('completed', $statusFilter);
-    }
-
-    if($importantFilter !== null){
-        $query->where('important', $importantFilter);
-    }
-
-    $tasks = $query->orderBy($sortBy, $direction)->get();
-
-    return view('home', compact('tasks', 'sortBy', 'direction', 'statusFilter', 'importantFilter'));
-}
-
-    
-
     public function store(Request $request){
         $incomingFields = $request->validate([
             'title' => 'required',
@@ -84,7 +60,7 @@ class TaskController extends Controller
         return redirect('/');
     }
 
-     public function complete(Request $request, Task $task){
+     public function complete(Task $task){
         if($task['completed'] === 0){
             $task['completed'] = 1;
         }else{
@@ -93,10 +69,7 @@ class TaskController extends Controller
 
         $task->update();
 
-        return redirect()->route('tasks.index', [
-        'sort_by' => $request->get('sort_by', 'date'),
-        'direction' => $request->get('direction', 'asc'),
-]);
+        return redirect('/');
     }
 
     public function destroyCompleted(){

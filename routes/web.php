@@ -25,7 +25,6 @@ Route::controller(UserController::class)->group(function(){
 
 
 Route::prefix('tasks')->name('tasks.')->controller(TaskController::class)->group(function (){
-  Route::get('/', 'index')->name('index');
   Route::post('/store', 'store')->name('store');
   Route::get('/{task}/edit', 'edit')->name('edit');
   Route::put('/{task}', 'update')->name('update');

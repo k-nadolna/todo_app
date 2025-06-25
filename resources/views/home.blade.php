@@ -34,79 +34,24 @@
       </div>
       
     <div class="bg-white border rounded-3 p-2">
-      <table class="w-100  table-hover">
-        {{-- default value for sorting --}}
-         @php
-                    $sortBy = $sortBy ?? '';
-                    $direction = $direction ?? '';
-                    @endphp
-        <thead class="border-bottom">
+      <table class="w-100 table table-hover">
+        <thead>
           <tr>
             <th>
              <h4>Status</h4>
-             <div>
-              <form method="GET" action="{{route('tasks.index')}}" id='filterForm'>
-                <select class="form-select border border-secondary" name="status" id="status" onchange="document.getElementById('filterForm').submit();">
-                  <option value="">all tasks</option>
-                  <option value="0" {{ request('status') === '0' ? 'selected' : ''}}>to be done</option>
-                  <option value="1" {{ request('status') === '1' ? 'selected' : ''}}>done</option>
-                </select>
-              
-             </div>
             </th>
-            <th> 
-              <div class="d-flex"> 
-                <div>
-                  <a href="{{ route('tasks.index', [
-                    'sort_by' => 'title',
-                    'direction' => ($sortBy === 'title' && $direction === 'asc') ? 'desc' : 'asc'
-                  ])}}" class="btn btn-sm btn-outline-secondary" title="Sortuj">
-
-                  @if ($sortBy === 'title' && $direction === 'asc')
-                    <i class="bi bi-caret-down-fill"></i>
-                  @elseif ($sortBy === 'title' && $direction === 'desc')
-                    <i class="bi bi-caret-up-fill"></i>
-                  @else
-                    <i class="bi bi-arrow-down-up"></i> {{-- default icon --}}
-                  @endif
-
-                  </a>
-
-                </div>
-                <h4 class="ms-2">Task</h4>
-              </div>
-              <div>
-                
-                  <select class="form-select border border-secondary" name="important" id="important" onchange="document.getElementById('filterForm').submit();">
-                    <option value="" >all tasks</option>
-                    <option value="0" {{request('important') === '0' ? 'selected' : ''}}>no important</option>
-                    <option value="1" {{request('important') === '1' ? 'selected' : ''}}>important</option>
-                  </select>
-                </form>
-              </div>
+            <th class="d-flex align-items-center">
+              {{-- I will add sorting sometime --}}
+              <form action="/" method="GET">
+                @csrf
+                <button class="btn btn-outline-secondary mx-2" title="Show only done">
+                  <i class="bi bi-check-lg"></i> 
+                </button>
+              </form>
+              <h4>Task</h4>
             </th>
-            <th class='d-flex'>
-              <div class="d-flex">
-                
-                <div>   
-                  <a href="{{ route('tasks.index', [
-                    'sort_by' => 'date',
-                    'direction' => ($sortBy === 'date' && $direction === 'asc') ? 'desc' : 'asc'
-                    ]) }}" class="btn btn-sm btn-outline-secondary" title="Sortuj">
-                  
-                    @if ($sortBy === 'date' && $direction === 'asc')
-                      <i class="bi bi-caret-down-fill"></i>
-                    @elseif ($sortBy === 'date' && $direction === 'desc')
-                      <i class="bi bi-caret-up-fill"></i>
-                    @else
-                      <i class="bi bi-arrow-down-up"></i> {{-- default icon --}}
-                    @endif
-                  </a>   
-                </div>
-                <h4 class="ms-2">Deadline</h4>
-              </div>
-              
-            </th>
+            <th>
+              <h4>Deadline</h4></th>
             <th></th>
             <th></th>
           </tr>
@@ -116,7 +61,7 @@
           @foreach ($tasks as $task)
         <tr class=" border-bottom align-middle {{ $task->completed === 1 ? 'table-secondary' : 'table-white'}}">
           <td class="p-3">
-            <form action="{{route('tasks.complete', ['task' => $task->id, 'sort_by' => $sortBy, 'direction' => $direction])}}" METHOD="POST">
+            <form action="{{route('tasks.complete', $task->id)}}" METHOD="POST">
               @csrf
               @method('PUT')
               @if($task['completed'] === 1)
