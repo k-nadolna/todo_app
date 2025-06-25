@@ -8,7 +8,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
-  <div class="bg-light m-5 p-4 border rounded w-50 mx-auto" >
+  <div class="container-fluid bg-light p-2 p-sm-4 border">
+  <x-nav>
+  </x-nav>
+  <div class="bg-white m-5 p-4 border rounded w-50 mx-auto" >
         <div class="border-bottom py-2 d-flex justify-content-between">
           <h3>Change the task</h3>
           <a href="{{route('dashboard')}}" class="btn btn-outline-secondary">Cancel</a>
@@ -30,7 +33,7 @@
           </form>
         </div>
   </div>
-
+</div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
