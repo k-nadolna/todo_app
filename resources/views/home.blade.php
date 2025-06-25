@@ -11,14 +11,9 @@
 <body>
 
 @auth
-<div class="bg-light m-5 p-4 border rounded" >
-  <div class="d-flex  border-bottom justify-content-between align-items-center mb-4 pb-3">
-    <h2 class="">Hello {{auth()->user()->name}} </h2>
-    <form action="{{ route('logout')}}" method="POST">
-      @csrf
-      <button class="btn btn-outline-secondary">Log out</button>
-    </form>
-  </div>
+<div class="container-fluid bg-light p-2 p-sm-4 border" >
+  <x-nav>
+  </x-nav>
 
   <div class="row">
     <div class="col-12 col-lg-8">
@@ -33,13 +28,13 @@
         </form>
       </div>
       
-    <div class="bg-white border rounded-3 p-2">
-      <table class="w-100  table-hover">
+      <div class="bg-white border rounded-3 p-2">
+        <table class="w-100  table-hover">
         {{-- default value for sorting --}}
-         @php
+          @php
                     $sortBy = $sortBy ?? '';
                     $direction = $direction ?? '';
-                    @endphp
+          @endphp
         <thead class="border-bottom">
           <tr>
             <th>
@@ -62,21 +57,19 @@
                     'direction' => ($sortBy === 'title' && $direction === 'asc') ? 'desc' : 'asc'
                   ])}}" class="btn btn-sm btn-outline-secondary" title="Sortuj">
 
-                  @if ($sortBy === 'title' && $direction === 'asc')
-                    <i class="bi bi-caret-down-fill"></i>
-                  @elseif ($sortBy === 'title' && $direction === 'desc')
-                    <i class="bi bi-caret-up-fill"></i>
-                  @else
-                    <i class="bi bi-arrow-down-up"></i> {{-- default icon --}}
-                  @endif
-
+                    @if ($sortBy === 'title' && $direction === 'asc')
+                      <i class="bi bi-caret-down-fill"></i>
+                    @elseif ($sortBy === 'title' && $direction === 'desc')
+                      <i class="bi bi-caret-up-fill"></i>
+                    @else
+                      <i class="bi bi-arrow-down-up"></i> {{-- default icon --}}
+                    @endif
                   </a>
 
                 </div>
                 <h4 class="ms-2">Task</h4>
               </div>
               <div>
-                
                   <select class="form-select border border-secondary" name="important" id="important" onchange="document.getElementById('filterForm').submit();">
                     <option value="" >all tasks</option>
                     <option value="0" {{request('important') === '0' ? 'selected' : ''}}>no important</option>
@@ -104,17 +97,15 @@
                   </a>   
                 </div>
                 <h4 class="ms-2">Deadline</h4>
-              </div>
-              
+              </div>  
             </th>
             <th></th>
             <th></th>
           </tr>
-
         </thead>
         <tbody>
           @foreach ($tasks as $task)
-        <tr class=" border-bottom align-middle {{ $task->completed === 1 ? 'table-secondary' : 'table-white'}}">
+          <tr class=" border-bottom align-middle {{ $task->completed === 1 ? 'table-secondary' : 'table-white'}}">
           <td class="p-3">
             <form action="{{route('tasks.complete', ['task' => $task->id, 'sort_by' => $sortBy, 'direction' => $direction])}}" METHOD="POST">
               @csrf
@@ -134,8 +125,7 @@
            
           </td>
           <td class="mx-2 p-3">
-            {{-- @if ($task->important)
-  @endif --}}
+            
             <h4 class="{{ $task->important ? 'text-warning' : 'text-black' }}">{{$task['title']}}</h4>
           </td>
           <td>{{$task['date']}}</td>
@@ -157,17 +147,15 @@
             </form>
           
           </td>
-        </tr>
-        @endforeach
+          </tr>
+          @endforeach
 
-        </tbody>
-        
-      </table>
+        </tbody>        
+        </table>
+      </div>
     </div>
-      
-   
-    </div>
-    <div class="col-12 col-lg-4">
+
+    <div class="col-12 col-lg-4 mt-4 mt-lg-0">
       <h3>Add a new task:</h3>
       <form action="{{ route('tasks.store')}}" method="POST">
         @csrf
@@ -184,6 +172,7 @@
         </div>
       </form>
     </div>
+
   </div>
  
 </div>
